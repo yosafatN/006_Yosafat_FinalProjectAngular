@@ -88,8 +88,7 @@ export class TableComponent implements AfterViewInit {
   }
 
   deletePayment(data: PaymentModel) {
-    this.clickedRows.delete(data)
-    this.clickListenerForEdit.emit(-1)
+    this.clickedRows.clear()
     this.deleteListener.emit(data)
   }
 }
