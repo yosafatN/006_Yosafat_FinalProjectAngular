@@ -3,9 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Observable, Subject, Subscription } from 'rxjs';
-import { PaymentServiceService } from 'src/app/services/payment-service.service';
-import { UserServiceService } from 'src/app/services/user-service.service';
+import { Observable, Subscription } from 'rxjs';
 import { PaymentModel } from '../models/user';
 
 @Component({
@@ -13,7 +11,7 @@ import { PaymentModel } from '../models/user';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent implements OnInit, AfterViewInit {
+export class TableComponent implements AfterViewInit {
 
   @Output() clickListenerForEdit = new EventEmitter<number>()
   @Output() updateDataListener = new EventEmitter()
@@ -25,20 +23,30 @@ export class TableComponent implements OnInit, AfterViewInit {
   private loginSubscription: Subscription = new Subscription
   @Input() updateData: Observable<PaymentModel[]> = new Observable<PaymentModel[]>()
   
+  dataInit: PaymentModel[] = [
+    {
+      paymentDetailId: 0,
+      cardOwnerName: 'Data Dummy',
+      cardNumber: '1234567890654321',
+      expirationDate: '11/24',
+      securityCode: '1234'
+    }
+  ]
+
+  dataTable: MatTableDataSource<PaymentModel> = new MatTableDataSource(this.dataInit)
+
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild(MatSort) sort: MatSort | undefined;
-
-  dataTable: MatTableDataSource<PaymentModel>
 
   displayedColumns: string[] = ['cardOwnerName','cardNumber','expirationDate','actions']
   clickedRows = new Set<PaymentModel>();
 
-  constructor(private paymentService: PaymentServiceService, private snackBar: MatSnackBar) {
-    let dataInit: PaymentModel[] = []
-    this.dataTable = new MatTableDataSource(dataInit)
-  }
+  constructor(private snackBar: MatSnackBar) { }
 
-  ngOnInit(): void {
+  ngAfterViewInit() {
+    this.dataTable.paginator = this.paginator!
+    this.dataTable.sort = this.sort!
+
     this.eventSubscription = this.events.subscribe(() => {
       this.clickedRows.clear()
     })
@@ -46,11 +54,6 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.loginSubscription = this.updateData.subscribe((res) => {
       this.dataTable = new MatTableDataSource(res)
     })
-  }
-
-  ngAfterViewInit(): void {
-    this.dataTable.paginator = this.paginator!;
-    this.dataTable.sort = this.sort!;
   }
 
   callSnackBar(message: string) {
@@ -83,8 +86,8 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   deletePayment(data: PaymentModel) {
-    this.clickTable(data)
-    this.deleteListener.emit(data)
+    this.clickedRows.delete(data)
     this.clickListenerForEdit.emit(-1)
+    this.deleteListener.emit(data)
   }
 }

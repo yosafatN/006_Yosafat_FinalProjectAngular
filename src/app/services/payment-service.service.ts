@@ -29,7 +29,7 @@ export class PaymentServiceService {
     .pipe(
       map((res: ResponseModel) => {
         this.dataSource = res.data
-        return res
+        return this.dataSource
       }),
       catchError(this.handleError)
     )

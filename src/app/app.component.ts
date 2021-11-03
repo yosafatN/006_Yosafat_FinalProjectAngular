@@ -54,7 +54,7 @@ export class AppComponent {
 
   updateData() {
     this.paymentService.getAllPayment().subscribe(res => {
-      this.goUpdateData.next(res.data)
+      this.goUpdateData.next(res)
       this.dialogRefLoading.close()
     },
     err => {
@@ -118,7 +118,6 @@ export class AppComponent {
   }
 
   submitDeleteData(data: PaymentModel) {
-    this.setEditDone()
     let message = `Are you sure to delete ${data.cardOwnerName}'s data?`
     let dataDialog: DialogConfirmModel = {
       id: 'edit',

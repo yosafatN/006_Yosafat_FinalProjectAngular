@@ -41,11 +41,11 @@ import { DialogConfermComponent } from './components/dialog-conferm/dialog-confe
     MatButtonModule,
     HttpClientModule,
     MatTableModule,
+    MatSortModule,
     MatIconModule,
     MatDialogModule,
     MatProgressBarModule,
     MatPaginatorModule,
-    MatSortModule,
     MatSnackBarModule
   ],
   providers: [],
