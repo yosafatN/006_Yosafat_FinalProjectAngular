@@ -18,6 +18,9 @@ export class UserServiceService {
     return this.http.post(api, data)
     .pipe(
       map((res: any) => {
+        console.log(res);
+        
+        localStorage.setItem('TOKEN_ACCESS',res.token)
         return res || {}
       }),
       catchError(this.handleError)
