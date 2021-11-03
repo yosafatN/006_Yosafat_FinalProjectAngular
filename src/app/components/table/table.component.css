@@ -1,0 +1,23 @@
+.mat-column-expirationDate {
+    width: 80px;
+    align-items: center;
+}
+
+.mat-column-actions {
+    width: 45px;
+    align-items: flex-end;
+}
+
+.row-is-clicked {
+    font-weight: bold;
+}
+
+.mat-row .mat-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+}
+
+.mat-row:hover .mat-cell {
+    border-color: currentColor;
+}
