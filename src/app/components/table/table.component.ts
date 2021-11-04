@@ -6,15 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Observable, Subscription } from 'rxjs';
 import { PaymentModel } from '../models/user';
 
-const dataInit: PaymentModel[] = [
-  {
-    paymentDetailId: 0,
-    cardOwnerName: 'Data Dummy',
-    cardNumber: '1234567890654321',
-    expirationDate: '11/24',
-    securityCode: '1234'
-  }
-]
+const dataInit: PaymentModel[] = []
 
 @Component({
   selector: 'app-table',
@@ -88,7 +80,6 @@ export class TableComponent implements AfterViewInit {
   }
 
   deletePayment(data: PaymentModel) {
-    this.clickedRows.clear()
     this.deleteListener.emit(data)
   }
 }

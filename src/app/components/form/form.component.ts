@@ -31,12 +31,7 @@ export class FormComponent implements OnInit {
         Validators.minLength(3),
         Validators.pattern(/^[A-Za-z ]*$/)
       ]],
-      cardNumber: ['', [
-        Validators.required,
-        Validators.minLength(16),
-        Validators.maxLength(16),
-        Validators.pattern(/^[0-9]*$/)
-      ]],
+      cardNumber: [ ],
       expirationDate: ['', [
         Validators.required,
         Validators.pattern(/^(0[1-9]|1[0-2])\/([0-9]{2})$/)

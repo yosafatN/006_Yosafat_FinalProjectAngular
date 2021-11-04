@@ -23,13 +23,20 @@ export class AppComponent {
   dialogRefLoading: any
 
   constructor(public dialog: MatDialog, private paymentService: PaymentServiceService, private snackBar: MatSnackBar) {
-    this.openLoginDialog()
+    if (paymentService.isLogin()) {
+      this.openLoading()
+      this.updateData()
+    }
+    else {
+      this.openLoginDialog()
+    }
   }
 
   openLoginDialog() {
     const dialogConfig = new MatDialogConfig()
     dialogConfig.id = "login"
     dialogConfig.disableClose = true
+    dialogConfig.backdropClass = 'bdrop'
     let dialogRef =this.dialog.open(LoginComponent, dialogConfig)
     
     dialogRef.afterClosed().subscribe(() => {
@@ -131,6 +138,7 @@ export class AppComponent {
     let dialogAddRef = this.dialog.open(DialogConfermComponent, dialogConfig)
     
     dialogAddRef.afterClosed().subscribe((res: DialogConfirmModel) => {
+      this.setFormForEdit(-1)
       if (res.result) {
         this.openLoading()
         this.paymentService.deletePayment(data.paymentDetailId).subscribe((res) => {
@@ -150,7 +158,12 @@ export class AppComponent {
 
   reOpenDialogLogin() {
     this.dialogRefLoading.close()
-    this.callSnackbar('There is something wrong. This is not your fault. Sorry you have to re-login')
+    this.callSnackbar('Your token period has expired. Sorry you have to re-login')
+    this.openLoginDialog()
+  }
+
+  logout() {
+    this.paymentService.logout()
     this.openLoginDialog()
   }
 }
