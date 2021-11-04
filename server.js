@@ -8,10 +8,10 @@ function requireHTTPS(req, res, next) {
 const express = require('express')
 const app = express()
 
-//app.use(requireHTTPS)
+app.use(requireHTTPS)
 app.use(express.static('./dist/PaymentApp'))
 
-app.get('/*', (req, res) => res.sendFile('index.html', { root: './dist/PaymentApp/' }))
+app.get('/*', (req, res) => res.sendFile('index.html', { root: '/dist/payment-app/' }))
 
 const port = process.env.PORT || 8080
 app.listen(port, () => {
