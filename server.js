@@ -9,9 +9,9 @@ const express = require('express')
 const app = express()
 
 app.use(requireHTTPS)
-app.use(express.static('./dist/PaymentApp'))
+app.use(express.static('./dist/006_Yosafat_FinalProjectAngular'))
 
-app.get('/*', (req, res) => res.sendFile('index.html', { root: '/dist/payment-app/' }))
+app.get('/*', (req, res) => res.sendFile('index.html', { root: '/dist/006_Yosafat_FinalProjectAngular/' }))
 
 const port = process.env.PORT || 8080
 app.listen(port, () => {
